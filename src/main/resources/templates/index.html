@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Usuários</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h1>Lista de Usuários</h1>
+
+  <!-- Botão de Cadastro CORRIGIDO -->
+  <a th:href="@{/usuarios/cadastrar}" class="btn btn-primary mb-3">
+    Cadastro Novo
+  </a>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Tipo</th>
+      <th>Telefone</th>
+      <th>Email</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="usuario : ${usuarios}">
+      <td th:text="${usuario.nome}"></td>
+      <td th:text="${usuario.cpf}"></td>
+      <td th:text="${usuario.tipo}"></td>
+      <td th:text="${usuario.telefone}"></td>
+      <td th:text="${usuario.email} ?: 'Não informado'"></td>
+      <td>
+        <!-- Formulário de exclusão CORRIGIDO -->
+        <form th:action="@{/usuarios/deletar/{cpf}(cpf=${usuario.cpf})}" method="post">
+          <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
+
+<!-- th e ${} são placeholder do thymeleaf, ou seja, marcam onde o html receberá dados java -->
+
+<!-- th acompanha o action para indicar qual dado vai substituir no endpoint para deletar no caso -->
